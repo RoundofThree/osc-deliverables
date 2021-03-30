@@ -22,9 +22,20 @@
 - Image 3: Hijack the RET pointer to injected shellcode
 ```
 <<-- Lower addresses 
-
+|     BUFFER (local variable)     |   EBP   |        RET        |  parameters  |  other function stack frame...|
+[    AAAA AAAA AAAA AAAA AAAA     ][  AAAA  ][ \xde\x4d\xc0\xde][ \x90\x90\x90 ][\x90\x90\x90 \xc0\xd4\xa3 ... ]
+*------   20 bytes --------------* *4 bytes-**----4 bytes ------* *---- NOP sled -----------* *-- shellcode --*
+                                                     |                                               ^
+                                                     |                                               |
+                                                     +-----------------------------------------------+
+                                                                      hijack the RET 
+-->> Buffer grows to higher addresses
 ```
 
+- Image 4: Payload construction
+```
+PAYLOAD = [fill buffer]
+```
 
 ### Lab 1: Buffer overflow to bypass a license check
 
