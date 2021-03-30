@@ -46,13 +46,22 @@ objdump -D exercise
 ```
 Screenshot. 
 
-2. Find the 
+2. Inspect the functions of the binary. 
 
 
-### Real world relevance: sudo privesc
+### Real world relevance: sudo privesc and Chrome 
+#### Privesc
+Screenshot of my (vulnerable) Ubuntu.
+```
+./hax-me-a-sandwich 2
+```
+Normal users can get a root shell by exploiting sudoedit. 
 
-
+#### Initial foothold
+Another real world relevance example is Google Chrome Heap Buffer Overflow, assigned CVE-2020-6452. The attacker
+crafts a URL to gain initial foothold to the victim system when the victim clicks on it. 
 
 ### Lab 2: return-to-libc to spawn a shell
 
 32-bit executable. 
+No time. 
