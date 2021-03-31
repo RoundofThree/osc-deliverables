@@ -39,15 +39,41 @@ PAYLOAD = [fill buffer]
 
 ### Lab 1: Buffer overflow to bypass a license check
 
-32-bit executable (64-bit executable load the 6 first arguments in special registers, it's a little bit trickier). 
-1. Find buffer size. 
-```
-objdump -D exercise
-```
-Screenshot. 
+64-bit executable.
 
-2. Inspect the functions of the binary. 
+Test this is vulnerable to buffer overflow -> Segfault means RET was overriden by our input. 
+1. Find interesting function. Note down the address.
+```
+gdb lollycat
+info func
+```
 
+2. The address is not exactly this. The addresses are moved by an offset.
+```
+gdb lollycat
+break main
+```
+We add this offset to the <success> function address we got before. 
+
+3. Find buffer size. 
+```
+./xpattern 50 > input
+```
+
+4. Find the place where RET is overriden.
+```
+gdb lollycat
+run < input
+./xpattern 0xaddressinsegfault -> position 40 -> buffer_size + local variable + ebp size = 40 bytes
+```
+
+5. Write the exploit.
+```
+python exploit.py > input
+cat input | ./lollycat 
+```
+
+6. Pusheen!
 
 ### Real world relevance: sudo privesc and Chrome 
 #### Privesc
